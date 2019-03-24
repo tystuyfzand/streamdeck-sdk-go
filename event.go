@@ -2,7 +2,6 @@ package sdk
 
 import (
 	"github.com/valyala/fastjson"
-	"log"
 	"sync"
 )
 
@@ -171,8 +170,6 @@ func removeEventHandlerInstance(t string, ehi *eventHandlerInstance) {
 
 // Handles calling permanent and once handlers for an event type.
 func handle(t string, i interface{}) {
-	log.Println("Handle event", t)
-
 	for _, eh := range handlers[t] {
 		eh.eventHandler.Handle(i)
 	}
