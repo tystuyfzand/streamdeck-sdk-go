@@ -19,7 +19,6 @@ func reader() {
 			return
 		}
 
-
 		v, err := p.ParseBytes(message)
 
 		if err != nil {
@@ -48,6 +47,8 @@ func reader() {
 			handleEvent(EventDeviceDidDisconnect, &DeviceDisconnectEvent{deviceId})
 		case EventSendToPlugin:
 			handleEvent(EventSendToPlugin, &SendToPluginEvent{action, context, payload, deviceId})
+		case EventDidReceiveSettings:
+			handleEvent(EventDidReceiveSettings, &ReceiveSettingsEvent{action, context, deviceId, payload.Get("settings")})
 		case EventDidReceiveGlobalSettings:
 			handleEvent(EventDidReceiveGlobalSettings, &GlobalSettingsEvent{payload.Get("settings")})
 		case EventApplicationDidLaunch:
