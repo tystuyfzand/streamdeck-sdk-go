@@ -160,12 +160,52 @@ func (eh globalSettingsEventHandler) Handle(i interface{}) {
 	}
 }
 
+// receiveSettingsEventHandler is an event handler for ReceiveSettingsEvent events.
+type receiveSettingsEventHandler func(*ReceiveSettingsEvent)
+
+// Type returns the event type for ReceiveSettingsEvent events.
+func (eh receiveSettingsEventHandler) Type() string {
+	return EventDidReceiveSettings
+}
+
+// New returns a new instance of ReceiveSettingsEvent.
+func (eh receiveSettingsEventHandler) New() interface{} {
+	return &ReceiveSettingsEvent{}
+}
+
+// Handle is the handler for ReceiveSettingsEvent events.
+func (eh receiveSettingsEventHandler) Handle(i interface{}) {
+	if t, ok := i.(*ReceiveSettingsEvent); ok {
+		eh(t)
+	}
+}
+
+// applicationLaunchEventHandler is an event handler for ApplicationLaunchEvent events.
+type applicationLaunchEventHandler func(*ApplicationLaunchEvent)
+
+// Type returns the event type for ApplicationLaunchEvent events.
+func (eh applicationLaunchEventHandler) Type() string {
+	return EventApplicationDidLaunch
+}
+
+// New returns a new instance of ApplicationLaunchEvent.
+func (eh applicationLaunchEventHandler) New() interface{} {
+	return &ApplicationLaunchEvent{}
+}
+
+// Handle is the handler for ApplicationLaunchEvent events.
+func (eh applicationLaunchEventHandler) Handle(i interface{}) {
+	if t, ok := i.(*ApplicationLaunchEvent); ok {
+		eh(t)
+	}
+}
+
 // applicationTerminateEventHandler is an event handler for ApplicationTerminateEvent events.
 type applicationTerminateEventHandler func(*ApplicationTerminateEvent)
 
 // Type returns the event type for ApplicationTerminateEvent events.
 func (eh applicationTerminateEventHandler) Type() string {
-	return EventDidReceiveGlobalSettings
+	return EventApplicationDidTerminate
 }
 
 // New returns a new instance of ApplicationTerminateEvent.
@@ -200,6 +240,12 @@ func handlerForInterface(handler interface{}) EventHandler {
 		return sendToPluginEventHandler(v)
 	case func(*GlobalSettingsEvent):
 		return globalSettingsEventHandler(v)
+	case func(*ReceiveSettingsEvent):
+		return receiveSettingsEventHandler(v)
+	case func(*ApplicationLaunchEvent):
+		return applicationLaunchEventHandler(v)
+	case func(*ApplicationTerminateEvent):
+		return applicationTerminateEventHandler(v)
 	}
 
 	return nil

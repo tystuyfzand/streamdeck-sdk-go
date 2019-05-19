@@ -2,7 +2,7 @@ package sdk
 
 func OpenURL(url string) {
 	conn.WriteJSON(&sentEvent{
-		Event: EventOpenURL,
+		Event:   EventOpenURL,
 		Payload: &openUrlPayload{url},
 	})
 }
@@ -11,13 +11,21 @@ func GetGlobalSettings() {
 	conn.WriteJSON(&sentEvent{Event: EventGetGlobalSettings, Context: PluginUUID})
 }
 
+func GetSettings(context string) {
+	conn.WriteJSON(&sentEvent{Event: EventGetSettings, Context: context})
+}
+
 func SetGlobalSettings(v interface{}) {
 	conn.WriteJSON(&sentEvent{Event: EventSetGlobalSettings, Context: PluginUUID, Payload: v})
 }
 
+func SetSettings(context string, v interface{}) {
+	conn.WriteJSON(&sentEvent{Event: EventSetSettings, Context: context, Payload: v})
+}
+
 func Log(message string) {
 	conn.WriteJSON(&sentEvent{
-		Event: EventLogMessage,
+		Event:   EventLogMessage,
 		Context: PluginUUID,
 		Payload: &logMessagePayload{message},
 	})
@@ -25,7 +33,7 @@ func Log(message string) {
 
 func SetTitle(context, title string, target int) {
 	conn.WriteJSON(&sentEvent{
-		Event: EventSetTitle,
+		Event:   EventSetTitle,
 		Context: context,
 		Payload: &setTitlePayload{Title: title, Target: target},
 	})
@@ -33,7 +41,7 @@ func SetTitle(context, title string, target int) {
 
 func SetState(context string, state int) {
 	conn.WriteJSON(&sentEvent{
-		Event: EventSetState,
+		Event:   EventSetState,
 		Context: context,
 		Payload: &setStatePayload{state},
 	})
@@ -41,7 +49,7 @@ func SetState(context string, state int) {
 
 func SetImage(context, imageData string, target int) {
 	conn.WriteJSON(&sentEvent{
-		Event: EventSetImage,
+		Event:   EventSetImage,
 		Context: context,
 		Payload: &setImagePayload{imageData, target},
 	})
@@ -49,14 +57,14 @@ func SetImage(context, imageData string, target int) {
 
 func ShowAlert(context string) {
 	conn.WriteJSON(&sentEvent{
-		Event: EventShowAlert,
+		Event:   EventShowAlert,
 		Context: context,
 	})
 }
 
 func ShowOk(context string) {
 	conn.WriteJSON(&sentEvent{
-		Event: EventShowOK,
+		Event:   EventShowOK,
 		Context: context,
 	})
 }

@@ -198,26 +198,6 @@ func handleEvent(t string, i interface{}) {
 	handle(t, i)
 }
 
-// applicationLaunchEventHandler is an event handler for ApplicationLaunchEvent events.
-type applicationLaunchEventHandler func(*ApplicationLaunchEvent)
-
-// Type returns the event type for ApplicationLaunchEvent events.
-func (eh applicationLaunchEventHandler) Type() string {
-	return EventApplicationDidLaunch
-}
-
-// New returns a new instance of ApplicationLaunchEvent.
-func (eh applicationLaunchEventHandler) New() interface{} {
-	return &ApplicationLaunchEvent{}
-}
-
-// Handle is the handler for ApplicationLaunchEvent events.
-func (eh applicationLaunchEventHandler) Handle(i interface{}) {
-	if t, ok := i.(*ApplicationLaunchEvent); ok {
-		eh(t)
-	}
-}
-
 // onInterface handles all internal events and routes them to the appropriate internal handler.
 func onInterface(i interface{}) {
 	switch t := i.(type) {
