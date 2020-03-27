@@ -68,3 +68,11 @@ func ShowOk(context string) {
 		Context: context,
 	})
 }
+
+func SendToPropertyInspector(context string, object interface{}) {
+	conn.WriteJSON(&sentEvent{
+		Event:   EventSendToPropertyInspector,
+		Context: context,
+		Payload: object,
+	})
+}
